@@ -1,0 +1,47 @@
+<mat-card-header>
+  {{room.location}} | {{room.vacancy + room.occupancy}} Beds | {{room.vacancy}} Remaining
+</mat-card-header>
+<mat-divider></mat-divider>
+<div class="spacing"></div>
+
+<mat-grid-list cols='2'>
+  <div *ngFor="let user of roomPlus.users">
+
+    <mat-grid-tile>
+      <div *ngIf="user.gender === 'male'">
+        <img src="https://s3.us-east-2.amazonaws.com/kbaynardbucket/male.png" style="width:50px; border-radius: 50%">
+        <div>
+          <font size='2'>{{user.name.first}}</font>
+        </div>
+        <div>
+          <font size='2'>{{user.name.last}}</font>
+        </div>
+      </div>
+
+      <div *ngIf="user.gender === 'female'">
+        <img src="https://s3.us-east-2.amazonaws.com/kbaynardbucket/female.png" style="width:50px; border-radius: 50%">
+        <div>
+          <font size='2'>{{user.name.first}}</font>
+        </div>
+        <div>
+          <font size='2'>{{user.name.last}}</font>
+        </div>
+      </div>
+
+      <div *ngIf="user.gender === 'male' || user.gender === 'female'">
+        <button mat-icon-button (click)="unassign(user)">
+          <mat-icon>remove</mat-icon>
+        </button>
+      </div>
+
+      <div *ngIf="user.gender === 'fill'">
+        <img src="https://254-online.com/wp-content/uploads/one-grey-circle.jpg" style="width:50px; border-radius: 50%">
+        <div>
+          <font size='2'>unassigned</font>
+        </div>
+      </div>
+
+    </mat-grid-tile>
+  </div>
+</mat-grid-list>
+

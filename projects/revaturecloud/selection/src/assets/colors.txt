@@ -1,0 +1,26 @@
+fonts
+https://fonts.google.com/specimen/Didact+Gothic
+https://fonts.google.com/specimen/Oswald
+Source Sans Pro
+https://edgewebfonts.adobe.com/fonts#/?class=sans-serif&page=1&languages=ca,cs,de,en,es,fr,it,nl,pl,pt,ru,sv&collection=source-sans-pro:n2,i2,n3,i3,n4,i4,n6,i6,n7,i7,n9,i9
+
+#F8F8F9 - greyish thick chevrons
+#474C55 - darker grey thin chevrons
+
+#F7F8F9 - dark thin chevrons
+
+
+
+#42a5f5 cornflowerblue - Header in revaturepro
+
+From join our team page
+#B9B9BA - Light Grey Font
+#6D9EBC - Kind of dark blue Background
+#74A5C1 - Lighter blue Background
+#474C54 - Paragraph header font blackish?
+#F06C36 - Orange color of icons
+#F06932 - Orange color of buttons
+#EAEAEA - Light grey background?
+
+FOOTER
+#9B9C9F - Grey fonts

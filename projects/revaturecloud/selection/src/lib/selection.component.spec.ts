@@ -6,20 +6,24 @@ describe('SelectionComponent', () => {
   let component: SelectionComponent;
   let fixture: ComponentFixture<SelectionComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SelectionComponent ]
-    })
-    .compileComponents();
-  }));
-
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        SelectionComponent
+      ]
+    });
     fixture = TestBed.createComponent(SelectionComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
+  });
+
+  it('should call ngOnInit on initialization', () => {
+    const spy = spyOn(component, 'ngOnInit');
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalled();
   });
 });

@@ -21,5 +21,25 @@
 + [Nicholas Escalona](https://github.com/escalonn)
 + [Pushpinder Kaur](https://github.com/kaurrevature)
 
+## testing
+In order to use the Jasmine and Karma framework for a module separate from app.module you need to change the following in the angular.json:
+```
+"test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/revaturecloud/selection/src/test.ts",
+            "tsConfig": "projects/revaturecloud/selection/tsconfig.spec.json",
+            "karmaConfig": "projects/revaturecloud/selection/karma.conf.js",
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ]
+          }
+```
+There are basic integration tests with Jasmine in the selection.component.spec.ts file.
 ## license
 __interface-web-selection__ is licensed under the terms of the [MIT License](https://github.com/revaturecloud/interface-web-selection/blob/master/LICENSE).

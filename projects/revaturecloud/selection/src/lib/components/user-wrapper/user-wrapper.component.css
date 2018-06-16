@@ -1,0 +1,6 @@
+.my-grid-tile {
+}
+
+.my-pagination /deep/ .ngx-pagination .current {
+  background: #F27847;
+}

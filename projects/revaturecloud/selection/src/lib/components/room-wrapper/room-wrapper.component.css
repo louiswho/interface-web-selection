@@ -1,0 +1,9 @@
+.my-grid-tile {
+    padding: 1px !important;
+    margin: 1px !important;
+  }
+
+  .my-pagination /deep/ .ngx-pagination .current {
+    background: #F27847;
+    margin-bottom: 200px;
+  }

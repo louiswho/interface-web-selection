@@ -1,0 +1,25 @@
+<mat-grid-list cols="4" rowHeight="65px">
+  <mat-grid-tile colspan="1">
+    <form class="user-search">
+      <mat-form-field>
+        <input matInput placeholder="search" [(ngModel)]="userName" name="userSearch">
+      </mat-form-field>
+    </form>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="3">
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list cols="4" rowHeight="250px">
+  <mat-grid-tile colspan="1" *ngFor="let user of allUsers | search:userName | paginate: { itemsPerPage: 4, currentPage: p, id: 'user-pagination' }">
+   <mat-card>
+    <lib-user-card [user]="user"></lib-user-card>
+  </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list cols="4" rowHeight="65px">
+    <mat-grid-tile colspan="4">
+        <pagination-controls class="my-pagination" id="user-pagination" (pageChange)="p = $event"></pagination-controls>
+      </mat-grid-tile>
+</mat-grid-list>

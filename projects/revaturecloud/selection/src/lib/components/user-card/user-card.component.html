@@ -1,0 +1,41 @@
+<mat-card-header>
+  <div class="flex-vert-center">
+    <mat-card-title class="user-name">{{user.name.first}} {{user.name.last}}</mat-card-title>
+    <button class="mat-icon-button"  mat-icon-button (click)="addToFirstAvailable()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</mat-card-header>
+<mat-divider></mat-divider>
+<mat-card-content>
+  <mat-grid-list cols="2">
+    <mat-grid-tile>
+      <div id="text">
+        <div>
+          {{user.location}}
+        </div>
+        <div>
+          {{user.room}}
+        </div>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div *ngIf="user.gender === 'male'">
+        <img src="https://s3.us-east-2.amazonaws.com/kbaynardbucket/male.png" style="width:50px; border-radius: 50%">
+      </div>
+      <div *ngIf="user.gender === 'female'">
+        <img src="https://s3.us-east-2.amazonaws.com/kbaynardbucket/female.png" style="width:50px; border-radius: 50%">
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-grid-list cols="10">
+    <mat-grid-tile colspan="10">
+      <mat-form-field>
+        <mat-select placeholder="Room">
+          <mat-option>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-card-content>
