@@ -12,7 +12,7 @@
 
 <mat-grid-list cols="4" rowHeight="250px">
   <mat-grid-tile colspan="1" *ngFor="let user of allUsers | search:userName | paginate: { itemsPerPage: 4, currentPage: p, id: 'user-pagination' }">
-   <mat-card>
+   <mat-card class="user-card">
     <lib-user-card [user]="user"></lib-user-card>
   </mat-card>
   </mat-grid-tile>

@@ -15,20 +15,21 @@ import { RoomAssociation } from '../models/roomAssociation.model';
 import { SearchParameters } from '../models/searchParameters.model';
 import { Room } from '../models/room.model';
 import { User } from '../models/user.model';
+import { Batch } from '../models/batch.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectionService {
 
-  readonly rootUrl = 'https://my-json-server.typicode.com/JGrippo/selectiondb';
+  readonly rootUrl = 'http://18.218.238.212/api/Selection';
 
   readonly apiEpAddToRoom = '/Room/Add';
   readonly apiEpRemoveFromRoom = '/Room/Remove';
   readonly apiEpBatches = '/Batches';
   readonly apiEpRooms = '/Rooms';
   readonly apiEpUsers = '/Users';
-  readonly apiEpUnassignedUsers = '/Users/Unassigned';
+  // readonly apiEpUnassignedUsers = '/Users/Unassigned';
 
   readonly sentAsUrlEnc = new HttpHeaders().set('Content-Type', 'x-www-form-urlencoded');
   readonly sentAsJson = new HttpHeaders().set('Content-Type', 'application/json');
@@ -40,6 +41,7 @@ export class SelectionService {
   *    API documentation.
   */
   addUserToRoom(roomAssociation: RoomAssociation) {
+    console.log(JSON.stringify(roomAssociation));
     return this.http.put(this.rootUrl + this.apiEpAddToRoom, roomAssociation, {
       headers: this.sentAsJson
     })
@@ -53,6 +55,7 @@ export class SelectionService {
   *    API documentation.
   */
   removeUserFromRoom(roomAssociation: RoomAssociation) {
+    console.log(JSON.stringify(roomAssociation));
     return this.http.put(this.rootUrl + this.apiEpRemoveFromRoom, roomAssociation, {
       headers: this.sentAsJson
     })
@@ -65,25 +68,59 @@ export class SelectionService {
   /**
    *    Gets collection of rooms that satisfy the specified search parameters.
    */
-  getComplexRequestOfRooms(searchParameters: SearchParameters): Observable<Room[]> {
-    return this.http.get<Room[]>(this.rootUrl + '/Rooms?', {
-      params: this.convertSearchParsObjToParams(searchParameters),
-      headers: this.sentAsUrlEnc
+  getComplexRequestOfRooms(searchParameters: SearchParameters): Observable<any> {
+
+    return this.http.put(this.rootUrl + this.apiEpRooms, searchParameters, {
+      headers: this.sentAsJson
     })
       .pipe(
         retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
       );
+
+
+    // return this.http.get<Room[]>(this.rootUrl + '/Rooms?', {
+    //   params: this.convertSearchParsObjToParams(searchParameters),
+    //   headers: this.sentAsUrlEnc
+    // })
+    //   .pipe(
+    //     retry(3), // retry a failed request up to 3 times
+    //     catchError(this.handleError) // then handle the error
+    //   );
   }
 
-  getComplexRequestOfUsers(searchParameters: SearchParameters): Observable<User[]> {
-    return this.http.get<User[]>(this.rootUrl + '/Users?', {
+  getComplexRequestOfUsers(searchParameters: SearchParameters): Observable<any> {
+
+    return this.http.put(this.rootUrl + this.apiEpUsers, searchParameters, {
+      headers: this.sentAsJson
+    })
+      .pipe(
+        retry(3), // retry a failed request up to 3 times
+        catchError(this.handleError) // then handle the error
+      );
+
+
+    // return this.http.get<User[]>(this.rootUrl + '/Users?', {
+    //   params: this.convertSearchParsObjToParams(searchParameters),
+    //   headers: this.sentAsUrlEnc
+    // })
+    //   .pipe(
+    //     retry(3), // retry a failed request up to 3 times
+    //     catchError(this.handleError) // then handle the error
+    //   );
+  }
+
+  /**
+   * Gets collection of batches that satisfy the specified search parameters.
+   */
+  getComplexRequestOfBatches(searchParameters: SearchParameters): Observable<Batch[]> {
+    return this.http.get<Batch[]>(this.rootUrl + this.apiEpBatches + '?', {
       params: this.convertSearchParsObjToParams(searchParameters),
       headers: this.sentAsUrlEnc
     })
       .pipe(
         retry(3), // retry a failed request up to 3 times
-        catchError(this.handleError) // then handle the error
+        catchError(this.handleError)  // then handle the error
       );
   }
 
@@ -99,17 +136,6 @@ export class SelectionService {
   }
 
   /**
-   *    Gets all unassigned users.
-   */
-  getAllUnassignedUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.rootUrl + this.apiEpUnassignedUsers)
-      .pipe(
-        retry(3), // retry a failed request up to 3 times
-        catchError(this.handleError) // then handle the error
-      );
-  }
-
-  /**
    *    Gets all users.
    */
   getAllUsers(): Observable<User[]> {
@@ -117,6 +143,17 @@ export class SelectionService {
       .pipe(
         retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
+      );
+  }
+
+  /**
+   * Gets all batches.
+   */
+  getAllBatches(): Observable<Batch[]> {
+    return this.http.get<Batch[]>(this.rootUrl + this.apiEpBatches)
+      .pipe(
+        retry(3), // retry a failed request up to 3 times
+        catchError(this.handleError)  // then handle the error
       );
   }
 
@@ -171,8 +208,8 @@ export class SelectionService {
     if (searchParameters.hasBedAvailable) {
       httpParams = httpParams.append('hasBedAvailable', searchParameters.hasBedAvailable.toString());
     }
-    if (searchParameters.unassigned) {
-      httpParams = httpParams.append('unassigned', searchParameters.unassigned.toString());
+    if (searchParameters.assigned) {
+      httpParams = httpParams.append('assigned', searchParameters.assigned.toString());
     }
 
     return httpParams;

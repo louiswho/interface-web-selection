@@ -10,8 +10,8 @@
  * The service-hub-housing-wiki's page on this object:
  * "https://github.com/mjbradvica/service-hub-housing-ui-wiki/wiki/User-Model"
  *   Name - Custom class First - string, Middle - string, Last - string
- * @export
- * @class Room
+ * @'export
+ * @'class Room
  */
 
 export class Name {

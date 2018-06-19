@@ -16,6 +16,7 @@ export class UserWrapperComponent implements OnInit {
 
   allUsers:User[];
   userName = '';
+  p: number = 1;
 
   constructor(private userStoreService: UserStore) { }
 

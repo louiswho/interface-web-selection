@@ -1,23 +1,40 @@
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource">
+<div class="table-padding">
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
 
-    <ng-container matColumnDef="User">
-      <th mat-header-cell *matHeaderCellDef> User </th>
-      <td mat-cell *matCellDef="let tracker"> {{tracker.User.name.first}} {{tracker.User.name.last}} </td>
-    </ng-container>
+      <ng-container matColumnDef="User">
+        <th class="centered-cell" mat-header-cell *matHeaderCellDef> User </th>
+        <td mat-cell *matCellDef="let tracker"> {{tracker.User.name.first}} {{tracker.User.name.last}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="Room">
-      <th mat-header-cell *matHeaderCellDef> Room </th>
-      <td mat-cell *matCellDef="let tracker"> {{tracker.Room.roomId}} </td>
-    </ng-container>
+      <ng-container matColumnDef="Room">
+        <th class="centered-cell" mat-header-cell *matHeaderCellDef> Room </th>
+        <td mat-cell *matCellDef="let tracker"> {{tracker.Room.address.address1}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="Action">
-      <th mat-header-cell *matHeaderCellDef> Action </th>
-      <td mat-cell *matCellDef="let tracker"> {{tracker.Action}} </td>
-    </ng-container>
+      <ng-container matColumnDef="Action">
+        <th class="centered-cell" mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let tracker"> {{tracker.Action}} </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+      <ng-container matColumnDef="Iteration">
+        <th class="centered-cell" mat-header-cell *matHeaderCellDef> Iteration </th>
+        <td mat-cell *matCellDef="let tracker"> {{tracker.Iteration}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Validation">
+        <th class="centered-cell" mat-header-cell *matHeaderCellDef> Validation </th>
+        <td mat-cell *matCellDef="let tracker">
+          <button mat-raised-button (click)='undo(tracker)'>Undo</button>
+          <button mat-raised-button (click)='confirm(tracker)'>Confirm</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
 </div>
-
+<div class='confirm-div'>
+  <button class='confirm-btn' mat-raised-button (click)='confirmAll()'>Confirm All</button>
+</div>

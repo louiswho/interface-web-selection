@@ -31,13 +31,13 @@ export class PutService {
    * On successful response, updates the changes,
    * user, and room stores.
    *
-   * @param user The user to be assigned
-   * @param room The room the user is being assigned to
+   * param user The user to be assigned
+   * param room The room the user is being assigned to
    */
   assign(user: User, room: Room): void {
 
     this.service.addUserToRoom(
-      {userId: user.id, roomId: room.roomId}
+      {userId: user.id, roomId: room.id}
     ).subscribe((res) => {
       this.store.addUserToRoom(user, room);
       this.uStore.updateUsers();
@@ -52,12 +52,12 @@ export class PutService {
    * On successful response, updates the changes,
    * user, and rooms stores.
    *
-   * @param user the user to be unassigned
-   * @param room the room the user is being unassigned from
+   * param user the user to be unassigned
+   * param room the room the user is being unassigned from
    */
   unassign(user: User, room: Room): void {
     this.service.removeUserFromRoom(
-      {userId: user.id, roomId: room.roomId}
+      {userId: user.id, roomId: room.id}
     ).subscribe((res) => {
       this.store.removeUserFromRoom(user, room);
       this.uStore.updateUsers();

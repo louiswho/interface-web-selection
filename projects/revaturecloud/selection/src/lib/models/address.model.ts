@@ -18,8 +18,8 @@
  *  Address - Custom Class
  *  Address - Street - string, APT - string
  *  City - string, State - string, PostalCode - string, Country - string
- * @export
- * @class Batch
+ * @'export
+ * @'class Batch
  */
 
 export class Address {

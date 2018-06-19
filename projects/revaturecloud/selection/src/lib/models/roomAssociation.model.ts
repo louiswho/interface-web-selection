@@ -6,8 +6,8 @@
  * it has been extracted into its own model class instead of being an
  * anonymous object such that there is a single place where I can go to
  * update the model for the change.
- * @export
- * @class RoomAssociation
+ * @'export
+ * @'class RoomAssociation
  */
 
 export class RoomAssociation {

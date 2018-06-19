@@ -1,7 +1,7 @@
 <mat-card-header>
   <div class="flex-vert-center">
     <mat-card-title class="user-name">{{user.name.first}} {{user.name.last}}</mat-card-title>
-    <button class="mat-icon-button"  mat-icon-button (click)="addToFirstAvailable()">
+    <button *ngIf="!isHoused()" class="mat-icon-button"  mat-icon-button (click)="addToFirstAvailable()">
       <mat-icon>add</mat-icon>
     </button>
   </div>
@@ -14,16 +14,19 @@
         <div>
           {{user.location}}
         </div>
-        <div>
-          {{user.room}}
+        <div *ngIf='user.address'>
+          {{user.address.address2}}
+        </div>
+        <div *ngIf='!user.address'>
+          Unassigned
         </div>
       </div>
     </mat-grid-tile>
     <mat-grid-tile>
-      <div *ngIf="user.gender === 'male'">
+      <div *ngIf="isMale()">
         <img src="https://s3.us-east-2.amazonaws.com/kbaynardbucket/male.png" style="width:50px; border-radius: 50%">
       </div>
-      <div *ngIf="user.gender === 'female'">
+      <div *ngIf="isFemale()">
         <img src="https://s3.us-east-2.amazonaws.com/kbaynardbucket/female.png" style="width:50px; border-radius: 50%">
       </div>
     </mat-grid-tile>
@@ -31,8 +34,10 @@
   <mat-grid-list cols="10">
     <mat-grid-tile colspan="10">
       <mat-form-field>
-        <mat-select placeholder="Room">
-          <mat-option>
+        <mat-select placeholder="Room" [(ngModel)]="dropDownValue" (selectionChange)="addUserToRoom()">
+          <mat-option [value]='null'> None </mat-option>
+          <mat-option *ngFor="let room of rooms" [value]="room">
+            {{room.address.address1}} {{room.address.address2}}
           </mat-option>
         </mat-select>
       </mat-form-field>

@@ -15,13 +15,25 @@ import { Tracker } from '../../models/tracker.model';
 })
 export class TableViewComponent implements OnInit {
 
-  displayedColumns = ['User', 'Room', 'Action'];
+  displayedColumns = ['User', 'Room', 'Action', 'Iteration', 'Validation'];
   dataSource: MatTableDataSource<Tracker>;
 
   constructor(private changeStore: ChangeStore) { }
 
   ngOnInit() {
-    this.changeStore.changes$.subscribe(changes => this.dataSource = new MatTableDataSource(changes));
+    this.changeStore.changes.subscribe(changes => this.dataSource = new MatTableDataSource(changes));
+  }
+
+  undo(tracker: Tracker) {
+    console.log(tracker);
+  }
+
+  confirm(tracker: Tracker) {
+    this.changeStore.confirmChanges(tracker);
+  }
+
+  confirmAll() {
+    this.changeStore.confirmAllChanges();
   }
 
 }

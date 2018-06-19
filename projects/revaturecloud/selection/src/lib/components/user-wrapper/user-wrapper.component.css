@@ -4,3 +4,7 @@
 .my-pagination /deep/ .ngx-pagination .current {
   background: #F27847;
 }
+
+.user-card {
+  width: 180px;
+}

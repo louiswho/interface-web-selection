@@ -18,27 +18,58 @@ export class UserCardComponent implements OnInit {
 
   @Input() user: User;
 
+  rooms: Room[];
+  dropDownValue: Room;
+
   constructor(
     private putService: PutService,
     private roomStoreService: RoomStore
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.initRooms();
+  }
 
   /**
    * Adds this user to the first available room.
    */
   addToFirstAvailable() {
-    this.roomStoreService.rooms.subscribe((res) => {
-      let room: Room = res.find((value) => {
-        if (value.vacancy) {
-          return value.vacancy > 0;
-        } else {
-          return false
-        }
-      });
+    let room: Room = this.roomStoreService.roomsValue.find((room) => {
+      if (room.vacancy && room.gender && room.location) {
+        return room.vacancy > 0 && room.gender === this.user.gender && room.location === this.user.location;
+      } else {
+        return false;
+      }
+    });
 
-      this.putService.assign(this.user, room);
+    this.putService.assign(this.user, room);
+  }
+
+  addUserToRoom()
+  {
+    this.putService.assign(this.user, this.dropDownValue);
+  }
+
+  /**
+   * Forwards the output of the User static function.
+   */
+  isMale(): boolean {
+    return User.isMale(this.user);
+  }
+  isFemale(): boolean {
+    return User.isFemale(this.user);
+  }
+
+  /**
+   * Checks the user's address field to see if the user is assigned housing.
+   */
+  isHoused(): boolean {
+    return this.user.address !== null;
+  }
+
+  initRooms(){
+    this.roomStoreService.rooms.subscribe((res) => {
+      this.rooms = res.filter((room) => room.gender === this.user.gender && room.location === this.user.location && room.vacancy > 0);
     });
   }
 }

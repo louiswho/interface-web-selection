@@ -9,8 +9,8 @@
 *
 * The service-hub-housing-wiki's page on this object:
 * "https://github.com/mjbradvica/service-hub-housing-ui-wiki/wiki/User-Model"
- * @export
- * @class User
+ * @'export
+ * @'class User
 */
 
 import { Address } from './address.model';
@@ -24,4 +24,16 @@ export class User {
   type: string;
   name: Name;
   address: Address;
+
+  /**
+   * Answers the question.
+   */
+  static isMale(user: User): boolean {
+    let g: string = user.gender.toLowerCase();
+    return g === 'male' || g === 'm';
+  }
+  static isFemale(user: User): boolean {
+    let g: string = user.gender.toLowerCase();
+    return g === 'female' || g === 'f';
+  }
 }

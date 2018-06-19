@@ -18,8 +18,8 @@
   * char Gender
   * bool IsCompletelyUnassigned
   * }
-  * @export
-  * @class SearchParameters
+  * @'export
+  * @'class SearchParameters
   */
 
 export class SearchParameters {
@@ -29,5 +29,5 @@ export class SearchParameters {
   batchMinimumPercentage: number;
   isCompletelyUnassigned: boolean;
   hasBedAvailable: boolean;
-  unassigned: boolean;
+  assigned: boolean;
 }

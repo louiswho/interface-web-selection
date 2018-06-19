@@ -16,6 +16,8 @@ export class RoomSearchPipe implements PipeTransform {
       searchString = searchString.toLowerCase();
       if (room.location.toLowerCase().includes(searchString)
         || room.gender.toLowerCase().includes(searchString)
+        || room.address.address2.includes(searchString)
+        || room.address.address1.toLowerCase().includes(searchString)
         || room.address.city.toLowerCase().includes(searchString)
         || room.address.state.toLowerCase().includes(searchString)
         || room.address.postalCode == searchString

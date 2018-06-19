@@ -18,7 +18,7 @@ export class FilterService {
     batchMinimumPercentage: 0,
     isCompletelyUnassigned: false,
     hasBedAvailable: false,
-    unassigned: false,
+    assigned: false,
   };
 
   subject: BehaviorSubject<SearchParameters>;
@@ -30,7 +30,7 @@ export class FilterService {
   /**
    * Updates the SearchParameters and pushes the update to all subscribers
    *
-   * @param filter The updated set of parameters
+   * param filter The updated set of parameters
    */
   setFilter(filter: SearchParameters) {
     this.subject.next(filter);

@@ -6,7 +6,9 @@ import { SortParameters } from '../../models/sortParameters.model';
 import { UserStore } from '../../stores/user.store';
 import { RoomStore } from '../../stores/room.store';
 import { Router } from '@angular/router';
-
+import { BatchStore } from '../../stores/batch.store';
+import { Batch } from '../../models/batch.model';
+import { LocationStore } from '../../stores/location.store';
 /**
  * The filter panel of the housing selection front-end.
  *
@@ -23,29 +25,57 @@ import { Router } from '@angular/router';
 export class FilterPanelComponent implements OnInit {
 
   // Drop down select - options
-  batches: string[];
-  locations: string[];
-  buildings: string[];
+  batches: Batch[];
+  locations: Set<string>;
+  // buildings: string[]; Not implemented
 
   // Drop down select - currently selected
-  batch: string;
+  batchId: string;
   location: string;
-  building: string;
+  // building: string; Not implemented
 
   // Gender radio
-  readonly genders: object[] = [
-    {name: 'All', value: null},
-    {name: 'Male', value: 'male'},
-    {name: 'Female', value: 'female'},
-    {name: 'Other', value: 'other'}
+  readonly genders: object[] = [{
+    name: 'All',
+    value: null
+  },
+  {
+    name: 'Male',
+    value: 'M'
+  },
+  {
+    name: 'Female',
+    value: 'F'
+  },
+  {
+    name: 'Other',
+    value: 'U'
+  }
   ];
-  gender: string;
+  // Housing Situation radio options
+  readonly housingSituationOptions: object[] = [{
+    name: 'All',
+    value: null
+  },
+  {
+    name: 'Unhoused',
+    value: false
+  },
+  {
+    name: 'Housed',
+    value: true
+  }
+  ];
+  gender: string = null;
 
+
+  housingSituation = null;
   // Check box booleans
-  vacantRoomsOnly: boolean;
-  sortByMostVacancies: boolean;
-  unhousedUsersOnly: boolean;
-  unassignedUsers: boolean;
+  vacantRoomsOnly: boolean = false;
+  sortByMostVacancies: boolean = false;
+  // unhousedUsersOnly: boolean = true;
+  assignedUsers: boolean = false;
+  hasBedAvailable: boolean = false;
 
   // Output object
   filter: SearchParameters;
@@ -54,9 +84,11 @@ export class FilterPanelComponent implements OnInit {
   constructor(
     private userStore: UserStore,
     private roomStore: RoomStore,
+    private batchStore: BatchStore,
+    private locationStore: LocationStore,
     private filterService: FilterService,
     private filterSortService: FilterSortService,
-    private _router: Router) {
+    public _router: Router) {
 
     this.filter = {
       batch: null,
@@ -65,23 +97,24 @@ export class FilterPanelComponent implements OnInit {
       batchMinimumPercentage: null,
       isCompletelyUnassigned: null,
       hasBedAvailable: null,
-      unassigned: null,
+      assigned: false,
     };
 
     this.sort = {
       sortByMostVacancies: false,
     };
-
-    this._router = _router;
   }
 
   ngOnInit() {
-    // this.batches = new Set(this.selectionService.getAllBatches());
-    // this.cities = new Set(this.selectionService.getAllCities());
-    // this.buildings = new Set(this.selectionService.getAllBuildings());
-    this.batches = ['batch1', 'batch2', 'batch3'];
-    this.locations = ['Chicago', 'Reston', 'Tampa', 'New York'];
-    this.buildings = ['b1', 'b2', 'b3'];
+    this.batchStore.batches.subscribe((res) => {
+      this.batches = res;
+    });
+    this.locationStore.locations.subscribe((res) => {
+      this.locations = new Set<string>(res.map((el) => {
+        return el.location;
+      }));
+    });
+    // this.buildings = ['Not', 'Implemented', 'Yet'];
   }
 
   /**
@@ -89,30 +122,65 @@ export class FilterPanelComponent implements OnInit {
    * filterService given in the constructor.
    */
   update(): void {
-    let tempGender: string;
-    if (this.gender) {
-      tempGender = this.gender.toLowerCase();
-    } else {
-      tempGender = this.gender;
-    }
 
-    this.filter = {
-      batch: this.batch,
-      location: this.location,
-      gender: tempGender,
-      batchMinimumPercentage: null, // Not implemented
-      isCompletelyUnassigned: this.vacantRoomsOnly,
-      hasBedAvailable: null, // Not implemented
-      unassigned: this.unassignedUsers,
-    };
+    // this.filter = {
+    //   batch: this.batchId,
+    //   location: this.location,
+    //   gender: this.tempGender,
+    //   batchMinimumPercentage: null, // Not implemented
+    //   isCompletelyUnassigned: this.vacantRoomsOnly,
+    //   hasBedAvailable: this.hasBedAvailable,
+    //   unassigned: this.unassignedUsers,
+    // };
 
-    this.sort = {
-      sortByMostVacancies: this.sortByMostVacancies,
-    };
+    this.AssignValuesToFilter();
 
     this.filterService.setFilter(this.filter);
-    this.filterSortService.setFilter(this.sort);
     this.userStore.updateUsers();
     this.roomStore.updateRooms();
+    this.batchStore.updateBatches();
+  }
+
+  /**
+   * Sort version of Update.  Only acts on the stores affected by the sort filter.
+   */
+  updateSort(): void {
+    this.sort = {
+      sortByMostVacancies: this.sortByMostVacancies
+    };
+
+    this.filterSortService.setFilter(this.sort);
+    this.roomStore.updateRooms();
+  }
+
+  /**
+   * Updates the filter with the two-way-bound member.
+   * If a value is falsy it assigns it as null.
+   */
+  private AssignValuesToFilter() {
+    if (this.batchId) {
+      this.filter.batch = this.batchId;
+    } else {
+      this.filter.batch = null;
+    }
+    if (this.location) {
+      this.filter.location = this.location;
+    } else {
+      this.filter.location = null;
+    }
+    if (this.vacantRoomsOnly) {
+      this.filter.isCompletelyUnassigned = this.vacantRoomsOnly;
+    } else {
+      this.filter.isCompletelyUnassigned = null;
+    }
+    if (this.hasBedAvailable) {
+      this.filter.hasBedAvailable = this.hasBedAvailable;
+    } else {
+      this.filter.hasBedAvailable = null;
+    }
+    this.filter.gender = this.gender;
+    this.filter.assigned = this.housingSituation;
+
   }
 }
+

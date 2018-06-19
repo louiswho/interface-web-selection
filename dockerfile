@@ -10,7 +10,8 @@ WORKDIR /docker
 COPY package*.json ./
 RUN npm install
 COPY . ./
-RUN npm run build
+RUN ng build @revaturecloud/selection --prod
+RUN ng build
 
 # STAGE - DEPLOY
 FROM nginx:1.14 as deploy

@@ -24,7 +24,7 @@ export class FilterSortService {
   /**
    * Updates the SortParameters and pushes the update to all subscribers.
    *
-   * @param newParams The updated set of parameters
+   * param newParams The updated set of parameters
    */
   setFilter(newParams: SortParameters): void {
     this.subject.next(newParams);

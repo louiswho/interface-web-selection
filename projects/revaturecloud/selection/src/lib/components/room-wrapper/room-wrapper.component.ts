@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Room } from '../../models/room.model';
 import { PageEvent } from '@angular/material';
 import { RoomStore } from '../../stores/room.store';

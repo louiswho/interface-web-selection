@@ -8,6 +8,7 @@ import { PutService } from './services/put.service';
 import { RoomCardComponent } from './components/room-card/room-card.component';
 import { UserStore } from './stores/user.store';
 import { RoomStore } from './stores/room.store';
+import { BatchStore } from './stores/batch.store';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
@@ -87,6 +88,7 @@ import { TableViewComponent } from './components/table-view/table-view.component
     FilterService,
     UserStore,
     RoomStore,
+    BatchStore,
     PutService,
     ChangeStore
   ],

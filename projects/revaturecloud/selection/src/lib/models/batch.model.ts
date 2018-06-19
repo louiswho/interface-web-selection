@@ -8,8 +8,8 @@
  *
  * The service-hub-housing-wiki's page on this object:
  * "https://github.com/mjbradvica/service-hub-housing-ui-wiki/wiki/Batch-Model"
- * @export
- * @class Batch
+ * @'export
+ * @'class Batch
  */
 import { Address } from './address.model';
 import { User } from './user.model';
