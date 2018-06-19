@@ -35,7 +35,6 @@
     <mat-grid-tile colspan="10">
       <mat-form-field>
         <mat-select placeholder="Room" [(ngModel)]="dropDownValue" (selectionChange)="addUserToRoom()">
-          <mat-option [value]='null'> None </mat-option>
           <mat-option *ngFor="let room of rooms" [value]="room">
             {{room.address.address1}} {{room.address.address2}}
           </mat-option>

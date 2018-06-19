@@ -24,24 +24,6 @@
           </mat-select>
         </mat-form-field>
       </div>
-
-      <!-- Not implemnted -->
-      <!--
-      <div>
-        <mat-form-field>
-          <mat-select placeholder="Building"
-              [(ngModel)]="building"
-              (selectionChange)="update()">
-            <mat-option>All buildings</mat-option>
-            <mat-option
-                *ngFor="let b of buildings"
-                [value]="b">
-              {{ b }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      -->
     </div>
 
     <div>
@@ -98,6 +80,7 @@
         <mat-tab label='Content'>
           <ng-template matTabContent>
             <div class='tab-content' name='content-selection'>
+              <div style="height: 30px"></div>
               <lib-content-wrapper></lib-content-wrapper>
             </div>
           </ng-template>

@@ -3,10 +3,10 @@ import { FilterService } from '../../services/filter.service';
 import { FilterSortService } from '../../services/filter-sort.service';
 import { SearchParameters } from '../../models/searchParameters.model';
 import { SortParameters } from '../../models/sortParameters.model';
+import { Batch } from '../../models/batch.model';
 import { UserStore } from '../../stores/user.store';
 import { RoomStore } from '../../stores/room.store';
 import { BatchStore } from '../../stores/batch.store';
-import { Batch } from '../../models/batch.model';
 import { LocationStore } from '../../stores/location.store';
 /**
  * The filter panel of the housing selection front-end.
@@ -156,7 +156,7 @@ export class FilterPanelComponent implements OnInit {
    * Updates the filter with the two-way-bound member.
    * If a value is falsy it assigns it as null.
    */
-  private AssignValuesToFilter() {
+  AssignValuesToFilter() {
     if (this.batchId) {
       this.filter.batch = this.batchId;
     } else {
@@ -179,7 +179,6 @@ export class FilterPanelComponent implements OnInit {
     }
     this.filter.gender = this.gender;
     this.filter.assigned = this.housingSituation;
-
   }
 }
 
