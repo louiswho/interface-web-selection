@@ -5,7 +5,6 @@ import { SearchParameters } from '../../models/searchParameters.model';
 import { SortParameters } from '../../models/sortParameters.model';
 import { UserStore } from '../../stores/user.store';
 import { RoomStore } from '../../stores/room.store';
-import { Router } from '@angular/router';
 import { BatchStore } from '../../stores/batch.store';
 import { Batch } from '../../models/batch.model';
 import { LocationStore } from '../../stores/location.store';
@@ -87,8 +86,8 @@ export class FilterPanelComponent implements OnInit {
     private batchStore: BatchStore,
     private locationStore: LocationStore,
     private filterService: FilterService,
-    private filterSortService: FilterSortService,
-    public _router: Router) {
+    private filterSortService: FilterSortService
+    ) {
 
     this.filter = {
       batch: null,

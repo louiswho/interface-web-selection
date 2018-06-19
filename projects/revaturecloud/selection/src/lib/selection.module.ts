@@ -12,8 +12,7 @@ import { BatchStore } from './stores/batch.store';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
-import { RouterModule} from '@angular/router';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule} from 'ngx-pagination';
 import {
   MatButtonModule,
   MatInputModule,
@@ -30,7 +29,8 @@ import {
   MatExpansionModule,
   MatTableModule,
   MatRadioModule,
-  MatSortModule
+  MatSortModule,
+  MatTabsModule
   } from '@angular/material';
 import { ContentWrapperComponent } from './components/content-wrapper/content-wrapper.component';
 import { UserWrapperComponent } from './components/user-wrapper/user-wrapper.component';
@@ -40,7 +40,6 @@ import { RoomWrapperComponent } from './components/room-wrapper/room-wrapper.com
 import { SelectionComponent } from './selection.component';
 import { SearchPipe } from './shared/search.pipe';
 import { RoomSearchPipe } from './shared/roomsearch.pipe';
-import { appRoutes } from './routes';
 import { TableViewComponent } from './components/table-view/table-view.component';
 
 @NgModule({
@@ -76,13 +75,12 @@ import { TableViewComponent } from './components/table-view/table-view.component
     MatSelectModule,
     MatDividerModule,
     MatButtonModule,
+    MatTabsModule,
     NgxPaginationModule,
     MatIconModule,
     MatExpansionModule,
     BrowserAnimationsModule,
-    MatRadioModule,
-    RouterModule,
-    RouterModule.forRoot(appRoutes)
+    MatRadioModule
   ],
   providers: [
     FilterService,

@@ -82,23 +82,38 @@
         </li>
       </ul>
     </div>
-    <div align="center">
-      <div *ngIf="this._router.url === '/content-wrapper' || this._router.url === '/'">
-        <button mat-raised-button routerLink='/table' routerLinkActive='active'>Table</button>
-      </div>
-      <div *ngIf="this._router.url === '/table'">
-        <button mat-raised-button routerLink='/content-wrapper' routerLinkActive='active'>Content</button>
-      </div>
-    </div>
 
   </mat-sidenav>
 
   <mat-sidenav-content>
+
     <div class="example-sidenav-content">
+
       <button type="button my-mini-fab" mat-mini-fab (click)="sidenav.toggle()">
         <i class="material-icons">menu</i>
       </button>
+
+      <mat-tab-group class='tab-group'>
+
+        <mat-tab label='Content'>
+          <ng-template matTabContent>
+            <div class='tab-content' name='content-selection'>
+              <lib-content-wrapper></lib-content-wrapper>
+            </div>
+          </ng-template>
+        </mat-tab>
+
+        <mat-tab label='Table'>
+          <ng-template matTabContent>
+            <div class='tab-content' name='table-selection'>
+              <lib-table-view></lib-table-view>
+            </div>
+          </ng-template>
+        </mat-tab>
+
+      </mat-tab-group>
+
     </div>
-    <router-outlet></router-outlet>
+
   </mat-sidenav-content>
 </mat-sidenav-container>
