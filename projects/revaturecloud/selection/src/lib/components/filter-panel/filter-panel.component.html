@@ -7,7 +7,7 @@
         <mat-form-field>
           <mat-select placeholder="Batch" [(ngModel)]="batchId" (selectionChange)="update()">
             <mat-option>All batches</mat-option>
-            <mat-option *ngFor="let b of batches" [value]="b.Id">
+            <mat-option *ngFor="let b of batches" [value]="b.id">
               {{ b.batchName }}
             </mat-option>
           </mat-select>

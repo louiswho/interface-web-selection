@@ -92,6 +92,15 @@ import { TableViewComponent } from './components/table-view/table-view.component
     PutService,
     ChangeStore
   ],
-  exports: [SelectionComponent]
+  exports: [
+    SelectionComponent,
+    UserWrapperComponent,
+    RoomWrapperComponent,
+    ContentWrapperComponent,
+    TableViewComponent,
+    UserCardComponent,
+    RoomCardComponent,
+    FilterPanelComponent
+    ]
 })
 export class SelectionModule { }
