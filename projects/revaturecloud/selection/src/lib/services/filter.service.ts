@@ -15,10 +15,10 @@ export class FilterService {
     batch: null,
     location: null,
     gender: null,
-    batchMinimumPercentage: 0,
-    isCompletelyUnassigned: false,
-    hasBedAvailable: false,
-    assigned: false,
+    batchMinimumPercentage: null,
+    isCompletelyUnassigned: null,
+    hasBedAvailable: null,
+    assigned: null,
   };
 
   subject: BehaviorSubject<SearchParameters>;
