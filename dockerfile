@@ -10,7 +10,7 @@ WORKDIR /docker
 COPY package*.json ./
 RUN npm install
 COPY . ./
-RUN ng build @revaturecloud/forecast --prod
+RUN ng build @revaturecloud/selection --prod
 RUN ng build
 
 # STAGE - DEPLOY
