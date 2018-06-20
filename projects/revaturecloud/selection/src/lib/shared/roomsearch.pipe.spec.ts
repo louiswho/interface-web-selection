@@ -1,7 +1,7 @@
 import { RoomSearchPipe } from './roomsearch.pipe';
 import { Room } from '../models/room.model';
 
-fdescribe('Pipe: RoomSearchPipe', () => {
+describe('Pipe: RoomSearchPipe', () => {
   let roomsearchPipe: RoomSearchPipe;
   let testRooms: Room[];
 

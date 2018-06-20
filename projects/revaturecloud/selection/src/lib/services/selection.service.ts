@@ -29,7 +29,6 @@ export class SelectionService {
   readonly apiEpBatches = '/Batches';
   readonly apiEpRooms = '/Rooms';
   readonly apiEpUsers = '/Users';
-  // readonly apiEpUnassignedUsers = '/Users/Unassigned';
 
   readonly sentAsUrlEnc = new HttpHeaders().set('Content-Type', 'x-www-form-urlencoded');
   readonly sentAsJson = new HttpHeaders().set('Content-Type', 'application/json');
@@ -41,7 +40,6 @@ export class SelectionService {
   *    API documentation.
   */
   addUserToRoom(roomAssociation: RoomAssociation) {
-    // console.log(JSON.stringify(roomAssociation)); // Debug
     return this.http.put(this.rootUrl + this.apiEpAddToRoom, roomAssociation, {
       headers: this.sentAsJson
     })
@@ -55,7 +53,6 @@ export class SelectionService {
   *    API documentation.
   */
   removeUserFromRoom(roomAssociation: RoomAssociation) {
-    // console.log(JSON.stringify(roomAssociation)); // Debug
     return this.http.put(this.rootUrl + this.apiEpRemoveFromRoom, roomAssociation, {
       headers: this.sentAsJson
     })
@@ -69,7 +66,6 @@ export class SelectionService {
    *    Gets collection of rooms that satisfy the specified search parameters.
    */
   getComplexRequestOfRooms(searchParameters: SearchParameters): Observable<any> {
-
     return this.http.put(this.rootUrl + this.apiEpRooms, searchParameters, {
       headers: this.sentAsJson
     })
@@ -77,16 +73,6 @@ export class SelectionService {
         retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
       );
-
-
-    // return this.http.get<Room[]>(this.rootUrl + '/Rooms?', {
-    //   params: this.convertSearchParsObjToParams(searchParameters),
-    //   headers: this.sentAsUrlEnc
-    // })
-    //   .pipe(
-    //     retry(3), // retry a failed request up to 3 times
-    //     catchError(this.handleError) // then handle the error
-    //   );
   }
 
   getComplexRequestOfUsers(searchParameters: SearchParameters): Observable<any> {
@@ -98,16 +84,6 @@ export class SelectionService {
         retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
       );
-
-
-    // return this.http.get<User[]>(this.rootUrl + '/Users?', {
-    //   params: this.convertSearchParsObjToParams(searchParameters),
-    //   headers: this.sentAsUrlEnc
-    // })
-    //   .pipe(
-    //     retry(3), // retry a failed request up to 3 times
-    //     catchError(this.handleError) // then handle the error
-    //   );
   }
 
   /**
@@ -214,5 +190,4 @@ export class SelectionService {
 
     return httpParams;
   }
-
 }

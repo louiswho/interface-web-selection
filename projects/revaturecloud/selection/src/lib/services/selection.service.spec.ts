@@ -1,181 +1,105 @@
-// import { TestBed } from '@angular/core/testing';
-// import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 
-// import { SelectionService } from '../../public_api';
-// import { User } from '../models/user.model';
-// import { Room } from '../models/room.model';
-// import { Address } from '../models/address.model';
-// import { HttpClientModule } from '@angular/common/http';
-// import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { SelectionService } from '../../public_api';
+import { User } from '../models/user.model';
+import { Room } from '../models/room.model';
+import { Address } from '../models/address.model';
 
-// describe('SelectionService Tests', () => {
+import { mockRooms, mockUsers, mockBatches } from '../mock/data.mock';
+import { Batch } from '../models/batch.model';
+import { SearchParameters } from '../models/searchParameters.model';
 
-//   let selectionService: SelectionService;
-//   let httpTestingController: HttpTestingController;
-//   // tslint:disable-next-line:prefer-const
-//   let testAddress1: Address = {
-//     address1: 'Street',
-//     address2: '314',
-//     city: 'Tampa',
-//     state: 'FL',
-//     postalCode: '33612',
-//     country: 'USA'
-//   };
-//   // tslint:disable-next-line:prefer-const
-//   let testAddress2: Address = {
-//     address1: 'Street',
-//     address2: '315',
-//     city: 'Tampa',
-//     state: 'FL',
-//     postalCode: '33612',
-//     country: 'USA'
-//   };
+describe('SelectionService Tests', () => {
 
-//   let testUsers: User[] = [
-//     {
-//       id: '1',
-//       location: 'Here',
-//       address: {
-//         address1: 'Angular Main Rd',
-//         address2: '3',
-//         city: 'Tampa',
-//         state: 'Florida',
-//         postalCode: '98798',
-//         country: 'USA'
-//       },
-//       email: 'email@gmail.com',
-//       name: {
-//         id: '1',
-//         first: 'You',
-//         middle: 'o',
-//         last: 'Kot',
-//       },
-//       gender: 'F',
-//       type: 'Unknown'
-//       // batch: null,
-//       // room: testRooms[0]
-//     },
-//     {
-//       id: '2',
-//       location: 'There',
-//       address: {
-//         address1: 'C# Main Rd',
-//         address2: '31',
-//         city: 'Tampa',
-//         state: 'Florida',
-//         postalCode: '98798',
-//         country: 'USA'
-//       },
-//       email: 'email@yahoo.com',
-//       name: {
-//         id: '2',
-//         first: 'Me',
-//         middle: 'o',
-//         last: 'Ko',
-//       },
-//       gender: 'M',
-//       type: 'Known'
-//       // batch: null,
-//       // room: testRooms[1]
-//     },
-//     {
-//       id: '3',
-//       location: 'Nowhere',
-//       address: {
-//         address1: 'Dotnet Main St',
-//         address2: '314',
-//         city: 'Tampa',
-//         state: 'Florida',
-//         postalCode: '98790',
-//         country: 'USA'
-//       },
-//       email: 'email@revature.com',
-//       name: {
-//         id: '3',
-//         first: 'Who',
-//         middle: 'o',
-//         last: 'K',
-//       },
-//       gender: 'F',
-//       type: 'Unknown'
-//       // batch: null,
-//       // room: testRooms[0]
-//     }
-//   ];
+  let selectionService: SelectionService;
+  let httpTestingController: HttpTestingController;
+  const filter: SearchParameters = {
+    batch: null,
+    location: null,
+    gender: null,
+    batchMinimumPercentage: null,
+    isCompletelyUnassigned: null,
+    hasBedAvailable: null,
+    assigned: null
+  };
+  beforeEach(() => {
 
-//   let testRooms: Room[] = [
-//     {
-//       id: 'guid1',
-//       location: 'Tampa',
-//       vacancy: 4,
-//       occupancy: 4,
-//       gender: 'male',
-//       address: testAddress1,
-//       users: null
-//     },
-//     {
-//       id: 'guid2',
-//       location: 'Tampa',
-//       vacancy: 1,
-//       occupancy: 4,
-//       gender: 'f',
-//       address: testAddress2,
-//       users: [testUsers[0]]
-//     }
-//   ];
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [SelectionService]
+    });
 
-//   beforeEach(() => {
+    selectionService = TestBed.get(SelectionService);
+    httpTestingController = TestBed.get(HttpTestingController);
+  });
 
-//     TestBed.configureTestingModule({
-//       imports: [HttpClientModule, HttpClientTestingModule],
-//       providers: [SelectionService],
-//       schemas: [NO_ERRORS_SCHEMA]
-//     });
+  afterEach(() => {
+    httpTestingController.verify();
+  });
 
-//     selectionService = TestBed.get(SelectionService);
-//     httpTestingController = TestBed.get(HttpTestingController);
-//   });
+  it('should GET all rooms', () => {
+    selectionService.getAllRooms()
+      .subscribe((data: Room[]) => {
+        expect(data.length).toBe(2);
+      });
 
-//   afterEach(() => {
-//     httpTestingController.verify();
-//   });
+    // tslint:disable-next-line:prefer-const
+    let roomsRequest: TestRequest = httpTestingController.expectOne(selectionService.rootUrl + selectionService.apiEpRooms);
+    expect(roomsRequest.request.method).toEqual('GET');
 
-//   it('should GET all rooms', () => {
-//     selectionService.getAllRooms()
-//       .subscribe((data: Room[]) => {
-//         expect(data.length).toBe(2);
-//       });
+    roomsRequest.flush(mockRooms);
+  });
 
-//     // tslint:disable-next-line:prefer-const
-//     let roomsRequest: TestRequest = httpTestingController.expectOne(selectionService.rootUrl + selectionService.apiEpRooms);
-//     expect(roomsRequest.request.method).toEqual('GET');
+  it('should GET all users', () => {
+    selectionService.getAllUsers()
+      .subscribe((data: User[]) => {
+        expect(data.length).toBe(4);
+      });
 
-//     roomsRequest.flush(testRooms);
-//   });
+    // tslint:disable-next-line:prefer-const
+    let usersRequest: TestRequest = httpTestingController.expectOne(selectionService.rootUrl + selectionService.apiEpUsers);
+    expect(usersRequest.request.method).toEqual('GET');
 
-//   it('should GET all users', () => {
-//     selectionService.getAllUsers()
-//       .subscribe((data: User[]) => {
-//         expect(data.length).toBe(3);
-//       });
+    usersRequest.flush(mockUsers);
+  });
+  it('should GET all batches', () => {
+    selectionService.getAllBatches()
+      .subscribe((data: Batch[]) => {
+        expect(data.length).toBe(6);
+      });
 
-//     // tslint:disable-next-line:prefer-const
-//     let usersRequest: TestRequest = httpTestingController.expectOne(selectionService.rootUrl + selectionService.apiEpUsers);
-//     expect(usersRequest.request.method).toEqual('GET');
+    // tslint:disable-next-line:prefer-const
+    let batchesRequest: TestRequest = httpTestingController.expectOne(selectionService.rootUrl + selectionService.apiEpBatches);
+    expect(batchesRequest.request.method).toEqual('GET');
 
-//     usersRequest.flush(testUsers);
-//   });
+    batchesRequest.flush(mockBatches);
+  });
 
-//   // it('should GET all users', () => {
-//   //   selectionService.getAllUnassignedUsers()
-//   //     .subscribe((data: User[]) => {
-//   //       expect(data.length).toBe(3);
-//   //     });
+  // Complex request tests
+  it('should GET all rooms with search params', () => {
+    selectionService.getComplexRequestOfRooms(filter)
+      .subscribe((data: Room[]) => {
+        expect(data.length).toBe(2);
+      });
 
-//   //   // tslint:disable-next-line:prefer-const
-//   //   let usersRequest: TestRequest = httpTestingController.expectOne(selectionService.rootUrl + selectionService.apiEpUnassignedUsers);
-//   //   expect(usersRequest.request.method).toEqual('GET');
+    // tslint:disable-next-line:prefer-const
+    let roomsRequest: TestRequest = httpTestingController.expectOne(selectionService.rootUrl + selectionService.apiEpRooms);
+    expect(roomsRequest.request.method).toEqual('PUT');
 
-//   //   usersRequest.flush(testUsers);
-//   // });
-// });
+    roomsRequest.flush(mockRooms);
+  });
+
+  it('should GET all users with search params', () => {
+    selectionService.getComplexRequestOfUsers(filter)
+      .subscribe((data: User[]) => {
+        expect(data.length).toBe(4);
+      });
+
+    // tslint:disable-next-line:prefer-const
+    let usersRequest: TestRequest = httpTestingController.expectOne(selectionService.rootUrl + selectionService.apiEpUsers);
+    expect(usersRequest.request.method).toEqual('PUT');
+
+    usersRequest.flush(mockUsers);
+  });
+});
