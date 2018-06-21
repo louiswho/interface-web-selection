@@ -1,7 +1,7 @@
 import { SearchPipe } from './search.pipe';
 import { User } from '../models/user.model';
 
-fdescribe('Pipe: SearchPipe', () => {
+describe('Pipe: SearchPipe', () => {
   let searchPipe: SearchPipe;
   let testUsers: User[];
 

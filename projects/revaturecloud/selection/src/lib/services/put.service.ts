@@ -39,7 +39,7 @@ export class PutService {
     this.service.addUserToRoom(
       {userId: user.id, roomId: room.id}
     ).subscribe((res) => {
-      this.store.addUserToRoom(user, room);
+      this.store.putUserRoom(user, room, true);
       this.uStore.updateUsers();
       this.rStore.updateRooms();
     });
@@ -59,7 +59,7 @@ export class PutService {
     this.service.removeUserFromRoom(
       {userId: user.id, roomId: room.id}
     ).subscribe((res) => {
-      this.store.removeUserFromRoom(user, room);
+      this.store.putUserRoom(user, room, false);
       this.uStore.updateUsers();
       this.rStore.updateRooms();
     });

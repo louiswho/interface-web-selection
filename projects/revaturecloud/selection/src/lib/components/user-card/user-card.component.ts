@@ -24,7 +24,7 @@ export class UserCardComponent implements OnInit {
   constructor(
     private putService: PutService,
     private roomStoreService: RoomStore
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initRooms();
@@ -36,7 +36,9 @@ export class UserCardComponent implements OnInit {
   addToFirstAvailable(): void {
     let room: Room = this.roomStoreService.roomsValue.find((room) => {
       if (room.vacancy && room.gender && room.location) {
-        return room.vacancy > 0 && room.gender === this.user.gender && room.location === this.user.location;
+        return room.vacancy > 0 &&
+          room.gender === this.user.gender &&
+          room.location === this.user.location;
       } else {
         return false;
       }
@@ -45,19 +47,20 @@ export class UserCardComponent implements OnInit {
   }
 
   addUserToRoom(): void {
-    if ( this.dropDownValue !== null ) {
-    this.putService.assign(this.user, this.dropDownValue);
-  } else {
-    let myroom: Room = this.roomStoreService.roomsValue.find((myroom) => {
-      if (myroom.address) {
-        return (myroom.address.address1 === this.user.address.address1 && myroom.address.address2 === this.user.address.address2);
-      } else {
-        return false;
-      }
-    });
+    if (this.dropDownValue !== null) {
+      this.putService.assign(this.user, this.dropDownValue);
+    } else {
+      let myroom: Room = this.roomStoreService.roomsValue.find((myroom) => {
+        if (myroom.address) {
+          return (myroom.address.address1 === this.user.address.address1 &&
+            myroom.address.address2 === this.user.address.address2);
+        } else {
+          return false;
+        }
+      });
 
-    this.putService.unassign(this.user, myroom);
-  }
+      this.putService.unassign(this.user, myroom);
+    }
 
   }
 
@@ -80,7 +83,8 @@ export class UserCardComponent implements OnInit {
 
   initRooms(): void {
     this.roomStoreService.rooms.subscribe((res) => {
-      this.rooms = res.filter((room) => room.gender === this.user.gender && room.location === this.user.location && room.vacancy > 0);
+      this.rooms = res.filter((room) => room.gender === this.user.gender &&
+        room.location === this.user.location && room.vacancy > 0);
     });
   }
 }

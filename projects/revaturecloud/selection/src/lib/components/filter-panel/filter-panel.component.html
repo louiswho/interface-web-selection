@@ -1,11 +1,11 @@
 <mat-sidenav-container class="example-container" autosize>
   <mat-sidenav #sidenav class="example-sidenav" mode="side">
-    <p align="center">Filter Results</p>
+    <p style="text-align: center">Filter Results</p>
 
-    <div align="center">
+    <div style="text-align: center">
       <div>
-        <mat-form-field>
-          <mat-select placeholder="Batch" [(ngModel)]="batchId" (selectionChange)="update()">
+        <mat-form-field name="batch">
+          <mat-select placeholder="Batch" [(ngModel)]="batchId" (selectionChange)="update()" ngDefaultControl>
             <mat-option>All batches</mat-option>
             <mat-option *ngFor="let b of batches" [value]="b.id">
               {{ b.batchName }}
@@ -15,8 +15,8 @@
       </div>
 
       <div>
-        <mat-form-field>
-          <mat-select placeholder="Location" [(ngModel)]="location" (selectionChange)="update()">
+        <mat-form-field name="location">
+          <mat-select placeholder="Location" [(ngModel)]="location" (selectionChange)="update()" ngDefaultControl>
             <mat-option>All cities</mat-option>
             <mat-option *ngFor="let l of locations" [value]="l">
               {{ l }}
@@ -27,8 +27,8 @@
     </div>
 
     <div>
-      <p align="center"> Gender </p>
-      <mat-radio-group class="example-radio-group" [(ngModel)]="gender" (change)="update()">
+      <p style="text-align: center"> Gender </p>
+      <mat-radio-group class="example-radio-group" [(ngModel)]="gender" (change)="update()" ngDefaultControl>
         <mat-radio-button class="example-radio-button" *ngFor="let g of genders" [value]="g.value">
           {{ g.name }}
         </mat-radio-button>
@@ -36,8 +36,8 @@
     </div>
 
     <div>
-      <p align="center"> Users </p>
-      <mat-radio-group class="example-radio-group" [(ngModel)]="housingSituation" (change)="update()">
+      <p style="text-align: center"> Users </p>
+      <mat-radio-group class="example-radio-group" [(ngModel)]="housingSituation" (change)="update()" ngDefaultControl>
         <mat-radio-button class="example-radio-button" *ngFor="let option of housingSituationOptions" [value]="option.value">
           {{ option.name }}
         </mat-radio-button>
@@ -45,20 +45,20 @@
     </div>
 
     <div>
-      <p align="center"> Occupancy</p>
+      <p style="text-align: center"> Occupancy</p>
       <ul style="list-style-type:none">
         <li>
-          <mat-checkbox [(ngModel)]="vacantRoomsOnly" (change)="update()">
+          <mat-checkbox [(ngModel)]="vacantRoomsOnly" (change)="update()" ngDefaultControl>
             Vacant Rooms Only
           </mat-checkbox>
         </li>
         <li>
-          <mat-checkbox [(ngModel)]="sortByMostVacancies" (change)="updateSort()">
+          <mat-checkbox [(ngModel)]="sortByMostVacancies" (change)="updateSort()" ngDefaultControl>
             Sort By Most Vacancies
           </mat-checkbox>
         </li>
         <li>
-          <mat-checkbox [(ngModel)]="hasBedAvailable" (change)="update()">
+          <mat-checkbox [(ngModel)]="hasBedAvailable" (change)="update()" ngDefaultControl>
             Hide Full Rooms
           </mat-checkbox>
         </li>
@@ -72,12 +72,15 @@
     <div class="example-sidenav-content">
 
       <button type="button my-mini-fab" mat-mini-fab (click)="sidenav.toggle()">
-        <i class="material-icons">menu</i>
+        <em class="material-icons">menu</em>
       </button>
+      <div style="height: 10px"></div>
+      <mat-tab-group [selectedIndex]='1' class='tab-group'>
 
-      <mat-tab-group class='tab-group'>
+        <mat-tab disabled>
+        </mat-tab>
 
-        <mat-tab label='Content'>
+        <mat-tab label='Selection'>
           <ng-template matTabContent>
             <div class='tab-content' name='content-selection'>
               <div style="height: 30px"></div>
@@ -86,7 +89,7 @@
           </ng-template>
         </mat-tab>
 
-        <mat-tab label='Table'>
+        <mat-tab label='History'>
           <ng-template matTabContent>
             <div class='tab-content' name='table-selection'>
               <lib-table-view></lib-table-view>

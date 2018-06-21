@@ -24,10 +24,14 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <div *ngIf="isMale()">
-        <img src="https://s3.us-east-2.amazonaws.com/kbaynardbucket/male.png" style="width:50px; border-radius: 50%">
+        <img src="https://s3.us-east-2.amazonaws.com/kbaynardbucket/male.png"
+          style="width:50px; border-radius: 50%"
+          alt="Male">
       </div>
       <div *ngIf="isFemale()">
-        <img src="https://s3.us-east-2.amazonaws.com/kbaynardbucket/female.png" style="width:50px; border-radius: 50%">
+        <img src="https://s3.us-east-2.amazonaws.com/kbaynardbucket/female.png"
+          style="width:50px; border-radius: 50%"
+          alt="Female">
       </div>
     </mat-grid-tile>
   </mat-grid-list>
@@ -35,6 +39,7 @@
     <mat-grid-tile colspan="10">
       <mat-form-field>
         <mat-select placeholder="Room" [(ngModel)]="dropDownValue" (selectionChange)="addUserToRoom()">
+          <mat-option [value]='null'> None </mat-option>
           <mat-option *ngFor="let room of rooms" [value]="room">
             {{room.address.address1}} {{room.address.address2}}
           </mat-option>

@@ -20,35 +20,18 @@ export class ChangeStore {
   constructor() {
   }
   /**
-   * Method that adds User, Room, and Action as "Add" to store, and updates
-   * observable for those subscribed.
+   * Method that adds User, Room, and Action as "Add" or "Remove" to store,
+   * and updates observable for those subscribed.
    * param {User} user
    * param {Room} room
    * @memberof ChangeStore
    */
-  addUserToRoom(user: User, room: Room) {
-    let tracker: Tracker=new Tracker();
-    tracker.User = user;
-    tracker.Room = room;
-    tracker.Action = 'Add';
-    const i = this._changeArray.filter(tkr => tkr.User.id === user.id );
-    tracker.Iteration = i.length;
-    this._changeArray.push(tracker);
-    this._changeTracker.next(this._changeArray);
-  }
-  /**
-   * Method that adds User, Room, and Action as "Remove" to store, and updates
-   * observable for those subscribed.
-   * param {User} user
-   * param {Room} room
-   * @memberof ChangeStore
-   */
-  removeUserFromRoom(user: User, room: Room) {
+  putUserRoom(user: User, room: Room, isAdd: boolean) {
     let tracker: Tracker = new Tracker();
     tracker.User = user;
     tracker.Room = room;
-    tracker.Action = 'Remove';
-    const i = this._changeArray.filter(tkr => tkr.User.id === user.id );
+    tracker.Action = isAdd ? 'Add' : 'Remove';
+    const i = this._changeArray.filter(tkr => tkr.User.id === user.id);
     tracker.Iteration = i.length;
     this._changeArray.push(tracker);
     this._changeTracker.next(this._changeArray);

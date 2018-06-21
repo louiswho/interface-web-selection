@@ -13,12 +13,10 @@ import { RoomStore } from '../../stores/room.store';
   templateUrl: './room-wrapper.component.html',
   styleUrls: ['./room-wrapper.component.css']
 })
-export class RoomWrapperComponent implements OnInit, OnDestroy {
+export class RoomWrapperComponent implements OnInit {
 
   rooms: Room[];
   searchRooms = '';
-  pageEvent: PageEvent;
-  pageOptions = [4, 8, 12];
   p: number = 1;
 
   constructor(private roomStore: RoomStore) {
@@ -29,8 +27,5 @@ export class RoomWrapperComponent implements OnInit, OnDestroy {
       .subscribe((rooms: Room[]) => {
         this.rooms = rooms;
       });
-  }
-
-  ngOnDestroy() {
   }
 }

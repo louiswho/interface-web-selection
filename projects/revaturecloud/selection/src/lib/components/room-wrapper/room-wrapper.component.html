@@ -9,14 +9,14 @@
   <mat-grid-tile colspan="3">
   </mat-grid-tile>
 </mat-grid-list>
-<mat-grid-list cols="3" rowHeight="450px">
+<mat-grid-list cols="3" rowHeight="550px">
   <mat-grid-tile class="my-grid-tile" *ngFor="let room of rooms | roomSearch:searchRooms | paginate: { itemsPerPage: 3, currentPage: p, id: 'room-pagination' }">
 
     <mat-card>
       <lib-room-card [room]="room"></lib-room-card>
       <div *ngIf="room.address">
-        <div style="text-align: center">
-          <font size='2'>{{room.address.address1}} : {{room.address.address2}}</font>
+        <div style="text-align: center; font-size: 2">
+          {{room.address.address1}} : {{room.address.address2}}
         </div>
       </div>
     </mat-card>
